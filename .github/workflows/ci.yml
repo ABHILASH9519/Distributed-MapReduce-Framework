@@ -10,6 +10,7 @@ jobs:
       - uses: actions/setup-go@v6
         with:
           go-version: '1.22'
-      - name: Format Go sources\n        run: gofmt -w .
+      - name: Format Go sources
+        run: gofmt -w .
       - run: go vet ./...
       - run: go test -race ./...
