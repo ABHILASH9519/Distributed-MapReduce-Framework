@@ -1,0 +1,1 @@
+Go makes concurrency practical. Go routines process words concurrently and workers process tasks.
