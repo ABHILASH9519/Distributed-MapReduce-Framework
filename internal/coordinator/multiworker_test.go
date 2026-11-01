@@ -1,6 +1,8 @@
 package coordinator
 
 import (
+	"errors"
+	"os"
 	"strings"
 	"sync"
 	"testing"
