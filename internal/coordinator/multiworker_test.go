@@ -19,7 +19,9 @@ func TestConcurrentWorkersCompleteJob(t *testing.T) {
 	const workerCount = 3
 	var wg sync.WaitGroup
 	errs := make(chan error, workerCount)
-	deadline := time.After(5 * time.Second)
+	timedOut := make(chan struct{})
+	timer := time.AfterFunc(5*time.Second, func() { close(timedOut) })
+	defer timer.Stop()
 
 	for i := 0; i < workerCount; i++ {
 		workerID := "worker-" + string(rune('1'+i))
@@ -28,7 +30,7 @@ func TestConcurrentWorkersCompleteJob(t *testing.T) {
 			defer wg.Done()
 			for {
 				select {
-				case <-deadline:
+				case <-timedOut:
 					errs <- errWorkerTimeout
 					return
 				default:
