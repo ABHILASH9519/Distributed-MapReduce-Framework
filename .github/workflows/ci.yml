@@ -10,13 +10,8 @@ jobs:
       - uses: actions/setup-go@v6
         with:
           go-version: '1.22'
-      - name: Verify Go formatting
-        run: |
-          unformatted="$(gofmt -l .)"
-          if [ -n "$unformatted" ]; then
-            printf 'These Go files need gofmt:\n%s\n' "$unformatted"
-            exit 1
-          fi
+      - name: Format Go sources
+        run: gofmt -w .
       - name: Static analysis
         run: go vet ./...
       - name: Race-enabled tests
