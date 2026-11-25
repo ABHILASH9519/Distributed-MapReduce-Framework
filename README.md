@@ -80,3 +80,28 @@ Start additional worker processes with unique IDs (worker-2, worker-3, etc.). Wo
 ## Scope and limitations
 
 This is an educational distributed-systems implementation, not a production Hadoop replacement. It currently uses one in-memory coordinator and one reducer. Job state is not durable across coordinator restarts, RPC has no authentication or encryption, and intermediate data is held in coordinator memory. Keep RPC bound to localhost or a trusted private network. A production deployment would need durable state, authenticated transport, partitioned reducers, resource limits, and operational observability.
+
+
+## Technical walkthrough
+
+```mermaid
+sequenceDiagram
+    participant P0 as Coordinator
+    participant P1 as Worker A
+    participant P2 as Worker B
+    participant P3 as Reducer
+    par Map task A
+        P0->>P1: Lease task
+        P1-->>P0: Submit result and lease token
+    and Map task B
+        P0->>P2: Lease task
+        P2-->>P0: Submit result and lease token
+    end
+    P0->>P3: Reduce accepted results
+```
+
+**Engineering review focus:** RPC task leases, stale-result fencing and concurrent workers.
+
+This diagram is illustrative, not a recorded execution trace. Refer to the existing run instructions for verification.
+
+![Last commit](https://img.shields.io/github/last-commit/ABHILASH9519/Distributed-MapReduce-Framework) ![Open issues](https://img.shields.io/github/issues/ABHILASH9519/Distributed-MapReduce-Framework)
