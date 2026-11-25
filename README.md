@@ -1,3 +1,21 @@
+# Distributed MapReduce — engineering overview
+
+<!-- portfolio-visual-start -->
+![Go](https://img.shields.io/badge/Go-RPC-00ADD8) ![Stars](https://img.shields.io/github/stars/ABHILASH9519/Distributed-MapReduce-Framework)
+
+![Animated MapReduce flow](docs/portfolio-flow.svg)
+
+```mermaid
+flowchart LR
+ A[Input chunks] --> B[RPC coordinator]
+ B --> C[Concurrent workers]
+ C --> D[Reduce results]
+```
+
+Illustrative flow, not live telemetry. Engineering focus: RPC coordination, concurrent processing and task reliability.
+
+<!-- portfolio-visual-end -->
+
 # Distributed MapReduce Framework
 
 A distributed word-count engine implemented in **Go**, using independent worker processes and Go's standard-library RPC.
